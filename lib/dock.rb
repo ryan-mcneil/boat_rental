@@ -31,4 +31,15 @@ class Dock
       sum + boat.boat_revenue(@max_rental_time)
     end
   end
+
+  def charges
+    # I would have built a hash where the renter.credit_card_number would have been the key
+    # and the charge would have been the value.  I would have iterated through
+    # and done a += every time a boat was returned
+  end
+
+  def total_hours_by_rental_type
+    # Upon return I would have created another hash of the boat.type and += the
+    # hours. 
+  end
 end
