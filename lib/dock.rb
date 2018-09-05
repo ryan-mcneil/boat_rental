@@ -1,3 +1,5 @@
+require 'pry'
+
 class Dock
   attr_reader :name, :max_rental_time, :boats_rented, :boats_returned
 
@@ -25,7 +27,8 @@ class Dock
   end
 
   def revenue
-    @boats.inject(0) do |sum, boat|
-      boat.boat_revenue
+    @boats_returned.inject(0) do |sum, boat|
+      sum + boat.boat_revenue(@max_rental_time)
+    end
   end
 end
