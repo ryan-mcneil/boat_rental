@@ -8,6 +8,7 @@ class Dock
     @max_rental_time = max_rental_time
     @boats_rented = []
     @boats_returned = []
+    @charges = {}
   end
 
   def rent(boat, renter)
@@ -33,13 +34,28 @@ class Dock
   end
 
   def charges
-    # I would have built a hash where the renter.credit_card_number would have been the key
-    # and the charge would have been the value.  I would have iterated through
-    # and done a += every time a boat was returned
+    charges = {}
+    @boats_returned.each do |boat|
+      if charges[boat.renter.credit_card_number] == nil
+        charges[boat.renter.credit_card_number] = boat.boat_revenue(@max_rental_time)
+      else
+        charges[boat.renter.credit_card_number] += boat.boat_revenue(@max_rental_time)
+      end
+    end
+    charges
   end
 
   def total_hours_by_rental_type
+    rental_types = {}
+    @boats_returned.each do |boat|
+      if rental_types[boat.type] == nil
+        rental_types[boat.type] = boat.hours_rented
+      else
+        rental_types[boat.type] += boat.hours_rented
+      end
+    end
+    rental_types
     # Upon return I would have created another hash of the boat.type and += the
-    # hours. 
+    # hours.
   end
 end
